@@ -1,0 +1,30 @@
+order_by_indegree 1
+#order_by_indegree-random n
+eades
+eades_imp 20
+insertionsort 1
+bubblesort n
+mergesort n
+quicksort n
+#quicksort_triangle
+#triangle_both_faster
+triangle_both_el 1
+#triangle_both_el_old
+#triangle_both
+#triangle_both_old
+#triangle_both-old
+degree_difference 2
+#degree_difference_old
+degree_difference_approx 1
+#dda_base sqrtn
+degree_difference_approx_v2 1
+#triangle_both-curr
+#tricount-indegree
+#degreediff-delta
+moves 
+moves-insert 20
+#moves-gen
+#swaps
+#sim-annealing
+#lp-pivot
+#random-indegree

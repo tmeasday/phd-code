@@ -1,0 +1,29 @@
+function y = PAST_single (Advice, Tree)
+
+%% PAST - Pick a Spanning Tree. 
+%
+% This function does a single run of PAST. So we've already 'picked' the
+% spanning tree---now we need to grab the clustering. Well this is quite
+% easy really--just give a label to 1 and then walk the tree, assigning
+% labels as we go.
+
+% makes my life easier
+Advice = Advice + Advice';
+Tree = Tree + Tree';
+
+y(1) = 1;
+to_search = [1];
+searched  = [];
+
+while ~isempty (to_search)
+   i = to_search(end);
+   
+   if and
+   
+   new_i = Tree(i,:) == 1;
+   
+   y(new_i) = Advice(new_i) * y(i);
+   
+   
+   to_search = [find(new_i), to_search(1:end-1)];
+end

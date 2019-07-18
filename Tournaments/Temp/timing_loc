@@ -1,0 +1,10 @@
+Assertion failed: (getnextc (infile) == ']'), function read_int_array, file array.c, line 45.
+Command terminated abnormally.
+real         0.10
+user         0.00
+sys          0.00
+Assertion failed: (getnextc (infile) == ']'), function read_int_array, file array.c, line 45.
+Command terminated abnormally.
+real         0.08
+user         0.00
+sys          0.00

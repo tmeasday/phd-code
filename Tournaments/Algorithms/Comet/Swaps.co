@@ -1,0 +1,61 @@
+include "LocalSolver";
+include "Algorithms/Comet/FAS";
+
+boolean DEBUG=false;
+
+int argc = System.argc();
+string[] args = System.getArgs();
+
+int n = args[2].toInt();
+
+if (args.up () > 2) {
+	if (args[3].equals ("debug")) {
+		DEBUG = true;
+	}
+}
+
+if (DEBUG) {
+	cout << "n is: " << n << endl;
+}
+
+range Size = 1..n;
+
+LocalSolver ls();
+FeedbackArcSet FAS(ls, Size, DEBUG);
+FAS.post ();
+
+
+var{int}[] nodes = FAS.getNodes ();
+
+int it = 0;
+int oldCost = 1;
+int newCost = 0;
+while (newCost < oldCost) {
+	oldCost = FAS.violations ();
+
+	if (DEBUG) {
+		cout << "Iteration " << it << ":" << endl;
+		cout << "Current cost: " << oldCost << endl;
+	}
+
+	selectMax(i in Size)(FAS.violations(nodes[i])) {
+		if (DEBUG) {
+			cout << "Highest cost node: " << i << endl;
+		}
+		selectMin(j in Size)(FAS.getSwapDelta(nodes[i], nodes[j])) {
+			if (DEBUG) {
+				cout << "Swapping with: " << j << endl;			
+			}
+			nodes[i] :=: nodes[j];
+		}
+	}
+
+	newCost = FAS.violations ();
+	if (DEBUG) {
+		FAS.printStatus ();
+		cout << "New cost: " << newCost << endl << endl;
+	}
+	it = it + 1;
+}
+
+FAS.printStatus ();

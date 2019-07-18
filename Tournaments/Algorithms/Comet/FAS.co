@@ -1,0 +1,187 @@
+class FeedbackArcSet extends UserConstraint
+{
+	range      Size;
+	float[,]   Tourn;
+	
+	var{int}[] Nodes;
+	ConstraintSystem Constraints;
+
+	bool DEBUG;
+
+	FeedbackArcSet (LocalSolver _ls, float[,] _Tourn, range _Size, bool _DEBUG) : UserConstraint (_ls)	
+	{
+		Size = _Size;
+		Tourn = _Tourn;
+		DEBUG = DEBUG;
+
+		RandomPermutation perm(Size);
+		var{int} nodes[Size](ls) := perm.get ();
+		Nodes = nodes;
+	}
+	
+	// read in the data ourselves
+	FeedbackArcSet (LocalSolver _ls, range _Size, bool _DEBUG) : UserConstraint (_ls)
+	{
+		Size = _Size;
+		DEBUG = _DEBUG;
+		float _Tourn[Size, Size];
+		
+		
+		forall (i in Size, j in Size: i < j) {
+			_Tourn[i, j] = cin.getFloat ();
+		}
+
+
+		if (DEBUG) {
+			forall (i in Size, j in Size: i < j) {
+				cout << _Tourn [i, j] << "\t";
+				if (j == Size.up()) {
+					cout << endl;
+				}
+			}
+		}
+		Tourn = _Tourn;
+
+		RandomPermutation perm(Size);
+		var{int} nodes[Size](ls) := perm.get ();
+		
+		Nodes = nodes;
+		if (DEBUG) {
+			cout << "Initial Order" << endl;
+			printStatus ();
+		}
+	}
+
+	var{int}[] getVariables() { return Nodes; }
+
+	void post () 
+	{
+		// do I need all this junk?
+		ConstraintSystem S(ls);
+		Constraints = S;
+		
+		forall (i in Size, j in Size: i < j) {
+			// simple to begin with
+			if (Tourn [i, j] > 0.5) {
+				S.satisfy(Nodes[i] > Nodes[j], 1);
+				if (DEBUG) {
+					cout << i << " <-- " << j << endl;
+					if (Nodes[i] > Nodes[j]) {
+						cout << "Satisfied" << endl;
+					} else {
+						cout << "Not Satisfied" << endl;
+					}
+				}
+			} else {
+				S.satisfy(Nodes[j] > Nodes[i], 1);
+				if (DEBUG) {
+					cout << i << " --> " << j << endl;
+					if (Nodes[i] < Nodes[j]) {
+						cout << "Satisfied" << endl;
+					} else {
+						cout << "Not Satisfied" << endl;
+					}
+					
+				}
+			}
+		}
+		
+		ls.close();
+	}
+	
+	//	var{bool} isTrue () { return Constraints.satisfied (); }
+	var{int} violations () { return Constraints.violations (); }
+	var{int} violations (var{int} x ) { return Constraints.violations (x); }
+
+	// what is the cost of moving x to position n?
+	int getMoveDelta (int x, int n)
+	{		
+		int xpos = Nodes[x];
+
+		int delta = 0;
+		if (xpos < n) {
+			// x is moving up, so we want edges from i to x
+			forall (i in Size: (xpos < Nodes[i]) && (Nodes[i] <= n)) {
+				if ((x > i && Tourn[i,x] > 0.5) ||
+				    (x < i && Tourn[x,i] <= 0.5)) {
+					delta += 1;
+				} else {
+					delta -= 1;
+				}
+			}
+		} else {
+				// x is moving down, so we want edges from x to i
+			forall (i in Size: (n <= Nodes[i]) && (Nodes[i] < xpos)) {
+				if ((x > i && Tourn[i,x] <= 0.5) ||
+				    (x < i && Tourn[x,i] > 0.5)) {
+					delta += 1;
+				} else {
+					delta -= 1;
+				}
+			}
+		}
+		
+		
+		//cout << "cost of moving " << x << " to pos " << n << " is " << delta << endl;
+		return delta;
+	}
+	
+	void moveNode (int x, int n)
+	{
+		int xpos = Nodes[x];
+		
+		if (xpos < n) {
+			// x is moving up, otherstuff move down
+			forall (i in Size: (xpos < Nodes[i]) && (Nodes[i] <= n)) {
+				Nodes[i]--;
+			}
+		} else {
+			// this time other stuff moves up
+			forall (i in Size: (n <= Nodes[i]) && (Nodes[i] < xpos)) {
+				Nodes[i] ++;
+			}
+		}
+		
+		Nodes[x] := n;
+	}
+	
+	int getSwapDelta (var{int} x, var{int} y)
+	{
+		return Constraints.getSwapDelta (x, y);
+	}
+	
+	var{int}[] getNodes ()
+	{
+		return Nodes;
+	}
+
+	void printStatus ()
+	{	
+		// FIXME -- everyone else is wrong?????
+		
+		cout << "[";
+		forall(i in Size) {
+				forall (j in Size) {
+				if (Nodes[j] == Size.up() - i + 1) {
+					if (i == Size.up()) {
+						cout << j-1 << "]" << endl;
+					} else {
+						cout << j-1 << ", ";			
+					}
+				}
+			}
+		}
+	}
+
+	void readInitialOrder ()
+	{
+		forall (i in Size) {
+			Nodes[i] := cin.getInt () +1;
+		}
+		
+		if (DEBUG) {
+			cout << "Intial Order given is:" << endl;
+			printStatus ();
+		}
+	}
+}

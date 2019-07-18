@@ -1,0 +1,9 @@
+﻿past.exe
+past.exe -l
+pasta_general.exe
+pasta_general.exe -r
+pasta_general.exe -l
+pasta_swap.exe -b 0 -n
+pasta_swap.exe
+pasta_swap.exe -t
+pasta_swap.exe -r

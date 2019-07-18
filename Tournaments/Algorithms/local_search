@@ -1,0 +1,53 @@
+#!/bin/bash -
+
+COMET=./Algorithms/Comet
+COMET_EXE=/Applications/Comet/comet.app/Contents/MacOS/comet 
+COMET_SRC="$COMET/Moves.co"
+
+args=
+
+
+
+DEBUG=false
+if [ "x$1" == "x-d" ]; then
+	DEBUG=true
+	args="$args -d"
+	shift
+fi
+#input="$COMET/input"
+
+if [ "x$1" == "x-i" ]; then
+	shift
+	args="$args -i"
+	initial=$1
+	shift
+fi
+
+# get rid of num runs, we don't need it
+shift
+
+while read line
+do
+  # can figure out the size using no. of opening brackets
+  size=$(echo $line | grep -o "\[" | wc -l)
+  size=$(expr $size - 1)
+
+	line=${line//[/}
+	line=${line//]/}
+	line=${line//,/ }
+
+	# initial is possible nothing..
+	initial=${initial//[/}
+	initial=${initial//]/}
+	initial=${initial//,/ }
+	line="$line $initial"
+
+  if [ $DEBUG = "true" ]; then
+    echo $line | $COMET_EXE $COMET_SRC $args $size "$@"
+  else
+    echo $line | $COMET_EXE $COMET_SRC $args $size "$@" 2>/dev/null | egrep '^\[' | tail -n1 
+  fi
+
+done
+
+

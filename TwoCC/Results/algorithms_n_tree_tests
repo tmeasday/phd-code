@@ -1,0 +1,40 @@
+﻿pasta_swap.exe -b 1 -n
+pasta_swap.exe -b 2 -n
+pasta_swap.exe -b 5 -n
+pasta_swap.exe -b 10 -n
+pasta_swap.exe -b 20 -n
+pasta_swap.exe -b 30 -n
+pasta_swap.exe -b 40 -n
+pasta_swap.exe -b 50 -n
+pasta_swap.exe -b 75 -n
+pasta_swap.exe -b 100 -n
+pasta_swap.exe -b 1 
+pasta_swap.exe -b 2
+pasta_swap.exe -b 5
+pasta_swap.exe -b 10
+pasta_swap.exe -b 20
+pasta_swap.exe -b 30
+pasta_swap.exe -b 40
+pasta_swap.exe -b 50
+pasta_swap.exe -b 75
+pasta_swap.exe -b 100
+pasta_general.exe -b 1
+pasta_general.exe -b 2
+pasta_general.exe -b 5
+pasta_general.exe -b 10
+pasta_general.exe -b 20
+pasta_general.exe -b 30
+pasta_general.exe -b 40
+pasta_general.exe -b 50
+pasta_general.exe -b 75
+pasta_general.exe -b 100 
+pasta_general.exe -l 1
+pasta_general.exe -l 2
+pasta_general.exe -l 5 
+pasta_general.exe -l 10
+pasta_general.exe -l 20 
+pasta_general.exe -l 30 
+pasta_general.exe -l 40 
+pasta_general.exe -l 50
+pasta_general.exe -l 75
+pasta_general.exe -l 100

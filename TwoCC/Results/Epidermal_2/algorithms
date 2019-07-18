@@ -1,0 +1,17 @@
+﻿pasta_swap.exe -b 0 -n
+pasta_general.exe
+pasta_swap.exe -b
+pasta_general.exe -l
+sample_and_insert.exe 10
+sample_and_insert.exe 15
+pasta_swap.exe -r
+pasta_swap.exe -t
+pasta_general.exe -r
+pasta_general.exe -c
+pasta_swap.exe -c
+pasta_general.exe -b 10
+pasta_general.exe -b 25 
+pasta_general.exe -b 50
+pasta_swap.exe -b 10
+pasta_swap.exe -b 25 
+pasta_swap.exe -b 50

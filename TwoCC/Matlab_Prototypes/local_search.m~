@@ -1,0 +1,24 @@
+function y = local_search (Advice, y)
+
+%% local_search (Advice, y)
+% 
+% Do gradient descent on the solution given by y by swapping nodes between
+% clusters.
+
+if nargin == 1
+    y = randint
+end
+
+EPS = 0.00001;
+
+while (true)
+    changes = (Advice * y) .* y;
+    
+    [min_change, min_idx] = min (changes);
+    
+    if (min_change) < -EPS
+        y(min_idx) = y(min_idx) * -1;
+    else
+        break;
+    end
+end

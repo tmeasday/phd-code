@@ -1,0 +1,77 @@
+include "LocalSolver";
+include "Algorithms/Comet/FAS";
+
+
+int argc = System.argc();
+string[] args = System.getArgs();
+
+// this is hardly the greatest coding ever
+boolean DEBUG=false;
+int argn = 2;
+if (args[argn].equals ("-d")) {
+	DEBUG = true;
+	argn++;
+	cout << "Debugging" << endl;
+}
+
+bool initial = false;
+if (args[argn].equals ("-i")) {
+	initial = true;
+	argn++;
+	if (DEBUG) {
+		cout << "Initial order given" << endl;
+	}
+}
+
+int n = args[argn++].toInt();
+
+
+if (DEBUG) {
+	cout << "n is: " << n << endl;
+}
+
+range Size = 1..n;
+
+LocalSolver ls();
+FeedbackArcSet FAS(ls, Size, DEBUG);
+FAS.post ();
+
+// give it a go
+if (initial) {
+	FAS.readInitialOrder ();
+}
+
+var{int}[] nodes = FAS.getNodes ();
+
+int it = 0;
+int oldCost = 1;
+int newCost = 0;
+while (newCost < oldCost) {
+	oldCost = FAS.violations ();
+
+	if (DEBUG) {
+		cout << "Iteration " << it << ":" << endl;
+		cout << "Current cost: " << oldCost << endl;
+	}
+
+	selectMax(i in Size)(FAS.violations(nodes[i])) {
+		if (DEBUG) {
+			cout << "Highest cost node: " << i << endl;
+		}
+		selectMin(j in Size)(FAS.getMoveDelta(i, j)) {
+			if (DEBUG) {
+				cout << "Moving " << i << " to " << j << endl;	
+			}
+			FAS.moveNode (i, j);
+		}
+	}
+
+	newCost = FAS.violations ();
+	if (DEBUG) {
+		FAS.printStatus ();
+		cout << "New cost: " << newCost << endl << endl;
+	}
+	it = it + 1;
+}
+
+FAS.printStatus ();

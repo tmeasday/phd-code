@@ -1,0 +1,6 @@
+﻿past.exe
+pasta_swap.exe
+pasta_swap.exe -r
+pasta_general.exe
+pasta_general.exe -l
+sample_and_insert.exe 10

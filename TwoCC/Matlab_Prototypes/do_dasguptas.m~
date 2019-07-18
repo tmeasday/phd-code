@@ -1,0 +1,8 @@
+function costs = do_dasguptas (Advices)
+    
+n_ps = length (Advices);
+
+tic;
+for i=1:n_ps
+    [y, n] = RepeatPartition (Advices{i}, 100);
+    n_edges = sum

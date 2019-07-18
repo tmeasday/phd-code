@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>documents</key>
+	<array>
+		<dict>
+			<key>filename</key>
+			<string>correlate.py</string>
+		</dict>
+		<dict>
+			<key>filename</key>
+			<string>normalize.py</string>
+		</dict>
+		<dict>
+			<key>filename</key>
+			<string>threshold.py</string>
+		</dict>
+		<dict>
+			<key>filename</key>
+			<string>votes.py</string>
+		</dict>
+	</array>
+	<key>fileHierarchyDrawerWidth</key>
+	<integer>200</integer>
+	<key>metaData</key>
+	<dict/>
+	<key>showFileHierarchyDrawer</key>
+	<true/>
+	<key>windowFrame</key>
+	<string>{{296, 4}, {639, 774}}</string>
+</dict>
+</plist>

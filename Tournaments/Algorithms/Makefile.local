@@ -1,0 +1,6 @@
+# Copy to Makefile.local and uncomment one of these
+# on an apple with glpk
+LP_FLAGS= -L/opt/local/lib -lglpk
+CFLAGS+= -DGLPK
+# on charikar
+#LP_FLAGS= -lcplex -lpthread
